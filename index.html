@@ -28,20 +28,18 @@
             .then(data => {
                 const rows = data.split('\n').slice(1);
                 const tbody = document.getElementById('petBody');
-                // ... (위쪽 코드는 그대로 두고, fetch 내부의 forEach 부분을 아래로 바꾸세요)
 
 				rows.forEach(row => {
-					// 쉼표로 데이터를 나눕니다
-					const columns = row.split(',');
+					// 쉼표로 데이터를 나누되, 불필요한 작은따옴표(')를 제거합니다.
+					const columns = row.replace(/'/g, '').split(','); 
 					if (columns.length < 3) return;
 
-					// 시트 순서에 맞게 변수를 할당합니다 (가치, 이름, ID 순서)
+					// 시트 열 순서에 맞게 정확히 배치합니다.
 					const [val, name, id] = columns;
 
-					// 이미지 경로와 표 데이터를 조합합니다
 					tbody.innerHTML += `
 						<tr>
-							<td><img src="https://raw.githubusercontent.com/ttirro/korea-adoptme/main/images/${id.trim()}.png" width="50" onerror="this.src='placeholder.png'"></td>
+							<td><img src="https://raw.githubusercontent.com/ttirro/korea-adoptme/main/images/${id.trim()}.png" width="50" onerror="this.src='https://via.placeholder.com/50'"></td>
 							<td>${name}</td>
 							<td>${val}</td>
 						</tr>
