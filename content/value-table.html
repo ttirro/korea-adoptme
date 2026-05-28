@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <tr><th>이미지</th><th>이름</th><th>가치(RP)</th></tr>
+    </thead>
+    <tbody id="petBody"></tbody>
+</table>
+
+<script>
+    // 가치표 전용 데이터 로직
+    function initValueTable() {
+        fetch('../data.json')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('petBody');
+                data.forEach(pet => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><img src="images/${pet.id}.png" width="50" onerror="this.style.display='none'"></td>
+                            <td>${pet.name}</td>
+                            <td>${pet.value}</td>
+                        </tr>
+                    `;
+                });
+            });
+    }
+</script>

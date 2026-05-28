@@ -1,0 +1,58 @@
+[
+  {
+    "id": "558",
+    "name": "Rainbow Rattle",
+    "value": "1560 RP",
+    "rarity": "Rare",
+    "source": "Gifts"
+  },
+  {
+    "id": "417",
+    "name": "Candy Cannon",
+    "value": "130 RP",
+    "rarity": "Legendary",
+    "source": "2018"
+  },
+  {
+    "id": "476",
+    "name": "A",
+    "value": "66 RP",
+    "rarity": "Legendary",
+    "source": "2018"
+  },
+  {
+    "id": "616",
+    "name": "B",
+    "value": "36 RP",
+    "rarity": "Legendary",
+    "source": "Halloween 2018"
+  },
+  {
+    "id": "1700",
+    "name": "C",
+    "value": "14 RP",
+    "rarity": "Rare",
+    "source": "Halloween 2019"
+  },
+  {
+    "id": "1701",
+    "name": "D",
+    "value": "14 RP",
+    "rarity": "Rare",
+    "source": "Halloween"
+  },
+  {
+    "id": "1702",
+    "name": "E",
+    "value": "14 RP",
+    "rarity": "Rare",
+    "source": "Halloween 8"
+  },
+  {
+    "id": "554",
+    "name": "F",
+    "value": "14 RP",
+    "rarity": "Legendary",
+    "source": "Halloween 2018"
+  }
+]

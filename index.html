@@ -19,8 +19,8 @@
     </div>
 
     <div id="nav">
-        <button onclick="showContent('calculator')">손해/이득 판단</button>
-        <button onclick="showContent('valueTable')">펫 가치표</button>
+        <button onclick="loadPage('calculator.html')">손해/이득 판단</button>
+        <button onclick="loadPage('value-table.html')">가치표</button>
         <button onclick="window.open('유튜브주소')">유튜브 링크</button>
         <button onclick="showContent('search')">아이템 검색</button>
     </div>
@@ -34,14 +34,16 @@
     </div>
 
     <script>
-        function showContent(type) {
-            const area = document.getElementById('main-content');
-            if (type === 'valueTable') {
-                area.innerHTML = '<h2>여기에 우리가 만든 펫 가치표를 불러옵니다.</h2>';
-                // 나중에 여기서 아까 만든 표 데이터를 불러오는 함수를 실행합니다.
-            } else if (type === 'calculator') {
-                area.innerHTML = '<h2>여기에 손해/이득 계산기가 나타납니다.</h2>';
-            }
+        // 메뉴를 누르면 해당 페이지를 불러오는 핵심 함수
+        function loadPage(page) {
+            fetch(`content/${page}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('main-content').innerHTML = html;
+                    
+                    // 가치표를 불러온 경우 데이터를 연동하는 함수 실행
+                    if(page === 'value-table.html') initValueTable();
+                });
         }
     </script>
 </body>
