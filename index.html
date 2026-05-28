@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 펫 가치표</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        img { width: 50px; }
+    </style>
+</head>
+<body>
+    <h1>펫 가치 리스트</h1>
+    <table>
+        <thead>
+            <tr><th>이미지</th><th>이름</th><th>가치(RP)</th></tr>
+        </thead>
+        <tbody id="petBody"></tbody>
+    </table>
+
+    <script>
+        // CSV 주소를 여기에 넣으세요
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_OTZXlK2wachpdnlg5k2BIHUaq7dE4ylJCUBpTjcIBwUX9m9gpJVH4XuXBtRLjBOeBxJXOLyGYlf/pub?output=csv';
+
+        fetch(csvUrl)
+            .then(res => res.text())
+            .then(data => {
+                const rows = data.split('\n').slice(1);
+                const tbody = document.getElementById('petBody');
+                rows.forEach(row => {
+                    const columns = row.split(',');
+                    if (columns.length < 3) return;
+                    
+                    const [val, name, id] = columns;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><img src="https://adoptmetradingvalues.com/images/${id.trim()}.png"></td>
+                            <td>${name}</td>
+                            <td>${val}</td>
+                        </tr>
+                    `;
+                });
+            });
+    </script>
+</body>
+</html>
