@@ -2,52 +2,47 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>나의 펫 가치표</title>
+    <title>AdoptMe 가치 사이트</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-        img { width: 50px; }
+        body { text-align: center; font-family: sans-serif; }
+        #header { height: 150px; background: #eee; margin-bottom: 20px; }
+        #nav { margin-bottom: 10px; }
+        #nav button { padding: 10px 20px; margin: 0 5px; cursor: pointer; }
+        #ad-space { height: 200px; background: #ddd; margin: 20px 0; }
+        #content-area { border: 2px solid #ccc; padding: 20px; min-height: 400px; }
     </style>
 </head>
 <body>
-    <h1>펫 가치 리스트</h1>
-    <table>
-        <thead>
-            <tr><th>이미지</th><th>이름</th><th>가치(RP)</th></tr>
-        </thead>
-        <tbody id="petBody"></tbody>
-    </table>
 
-	<script>
-		const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_OTZXlK2wachpdnlg5k2BIHUaq7dE4ylJCUBpTjcIBwUX9m9gpJVH4XuXBtRLjBOeBxJXOLyGYlf/pub?output=csv';
+    <div id="header">
+        <h1>[로고 이미지 공간]</h1>
+    </div>
 
-		fetch(csvUrl)
-			.then(res => res.text())
-			.then(data => {
-				const tbody = document.getElementById('petBody');
-				const rows = data.split('\n');
-				
-				rows.forEach(row => {
-					if (!row.trim()) return;
-					
-					const cols = row.split(',');
-					if (cols.length < 3) return;
+    <div id="nav">
+        <button onclick="showContent('calculator')">손해/이득 판단</button>
+        <button onclick="showContent('valueTable')">펫 가치표</button>
+        <button onclick="window.open('유튜브주소')">유튜브 링크</button>
+        <button onclick="showContent('search')">아이템 검색</button>
+    </div>
 
-					const val = cols[0].trim();
-					const name = cols[1].trim();
-					const id = cols[2].trim();
+    <div id="ad-space">광고가 들어갈 빈 큰 공간</div>
 
-					tbody.innerHTML += `
-						<tr>
-							<td><img src="images/${id}.png" width="50" onerror="this.style.display='none'"></td>
-							<td>${name}</td>
-							<td>${val}</td>
-						</tr>
-					`;
-				});
-			})
-			.catch(err => console.error("데이터 로딩 오류:", err));
-	</script>
+    <div id="content-area">
+        <div id="main-content">
+            <h2>여기에 기본적으로 손해/이득 계산기가 나타납니다.</h2>
+        </div>
+    </div>
+
+    <script>
+        function showContent(type) {
+            const area = document.getElementById('main-content');
+            if (type === 'valueTable') {
+                area.innerHTML = '<h2>여기에 우리가 만든 펫 가치표를 불러옵니다.</h2>';
+                // 나중에 여기서 아까 만든 표 데이터를 불러오는 함수를 실행합니다.
+            } else if (type === 'calculator') {
+                area.innerHTML = '<h2>여기에 손해/이득 계산기가 나타납니다.</h2>';
+            }
+        }
+    </script>
 </body>
 </html>
