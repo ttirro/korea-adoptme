@@ -14,36 +14,58 @@
 </head>
 <body>
 
-    <div id="header">
-        <h1>[로고 이미지 공간]</h1>
-    </div>
+    <div id="header"><h1>[로고 이미지 공간]</h1></div>
 
     <div id="nav">
         <button onclick="loadPage('calculator.html')">손해/이득 판단</button>
         <button onclick="loadPage('value-table.html')">가치표</button>
-        <button onclick="window.open('유튜브주소')">유튜브 링크</button>
-        <button onclick="showContent('search')">아이템 검색</button>
+        <button onclick="window.open('https://youtube.com')">유튜브 링크</button>
+        <button onclick="loadPage('search.html')">아이템 검색</button>
     </div>
 
     <div id="ad-space">광고가 들어갈 빈 큰 공간</div>
 
     <div id="content-area">
         <div id="main-content">
-            <h2>여기에 기본적으로 손해/이득 계산기가 나타납니다.</h2>
+            <h2>환영합니다! 메뉴를 선택하세요.</h2>
         </div>
     </div>
 
     <script>
-        // 메뉴를 누르면 해당 페이지를 불러오는 핵심 함수
+        // 페이지 로드 함수
         function loadPage(page) {
             fetch(`content/${page}`)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error("파일을 찾을 수 없습니다.");
+                    return response.text();
+                })
                 .then(html => {
                     document.getElementById('main-content').innerHTML = html;
-                    
-                    // 가치표를 불러온 경우 데이터를 연동하는 함수 실행
+                    // 가치표 페이지일 때만 실행
                     if(page === 'value-table.html') initValueTable();
-                });
+                })
+                .catch(err => console.error("로드 오류:", err));
+        }
+
+        // 가치표 데이터 로드 함수
+        function initValueTable() {
+            fetch('data.json')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('petBody');
+                    if (!tbody) return; // 테이블이 없으면 종료
+                    tbody.innerHTML = '';
+                    data.forEach(pet => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td><img src="images/${pet.id}.png" width="50" onerror="this.style.display='none'"></td>
+                                <td>${pet.name}</td>
+                                <td>${pet.value}</td>
+                            </tr>
+                        `;
+                    });
+                })
+                .catch(err => console.error("데이터 로딩 실패:", err));
         }
     </script>
 </body>
