@@ -19,9 +19,8 @@
         <tbody id="petBody"></tbody>
     </table>
 
-    <script>
-        // CSV 주소를 여기에 넣으세요
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_OTZXlK2wachpdnlg5k2BIHUaq7dE4ylJCUBpTjcIBwUX9m9gpJVH4XuXBtRLjBOeBxJXOLyGYlf/pub?output=csv';
+	<script>
+		const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRf_OTZXlK2wachpdnlg5k2BIHUaq7dE4ylJCUBpTjcIBwUX9m9gpJVH4XuXBtRLjBOeBxJXOLyGYlf/pub?output=csv';
 
 		fetch(csvUrl)
 			.then(res => res.text())
@@ -30,17 +29,15 @@
 				const rows = data.split('\n');
 				
 				rows.forEach(row => {
-					if (!row.trim()) return; // 빈 줄은 무시
+					if (!row.trim()) return;
 					
-					const cols = row.split(','); // 쉼표로 나눔
+					const cols = row.split(',');
 					if (cols.length < 3) return;
 
-					// 시트 순서에 맞게 변수 할당: 0=가치, 1=이름, 2=ID
 					const val = cols[0].trim();
 					const name = cols[1].trim();
 					const id = cols[2].trim();
 
-					// 표에 데이터 추가
 					tbody.innerHTML += `
 						<tr>
 							<td><img src="images/${id}.png" width="50" onerror="this.style.display='none'"></td>
