@@ -49,24 +49,35 @@
 
         // 가치표 데이터 로드 함수
         function initValueTable() {
-            fetch('data.json')
-                .then(res => res.json())
-                .then(data => {
-                    const tbody = document.getElementById('petBody');
-                    if (!tbody) return; // 테이블이 없으면 종료
-                    tbody.innerHTML = '';
-                    data.forEach(pet => {
-                        tbody.innerHTML += `
-                            <tr>
-                                <td><img src="images/${pet.id}.png" width="50" onerror="this.style.display='none'"></td>
-                                <td>${pet.name}</td>
-                                <td>${pet.value}</td>
-                            </tr>
-                        `;
-                    });
-                })
-                .catch(err => console.error("데이터 로딩 실패:", err));
-        }
+			fetch('data.json')
+				.then(res => res.json())
+				.then(data => {
+					const tbody = document.getElementById('petBody');
+					tbody.innerHTML = '';
+
+					// 1. 같은 가치끼리 묶기 (그룹화)
+					const grouped = data.reduce((acc, pet) => {
+						if (!acc[pet.value]) acc[pet.value] = [];
+						acc[pet.value].push(pet);
+						return acc;
+					}, {});
+
+					// 2. 그룹별로 행(row) 만들기
+					for (const value in grouped) {
+						const pets = grouped[value];
+						const imagesHtml = pets.map(p => 
+							`<img src="images/${p.id}.png" width="50" style="margin:5px;">`
+						).join('');
+
+						tbody.innerHTML += `
+							<tr style="border-bottom: 1px solid #ddd;">
+								<td style="padding:10px; font-weight:bold;">${value}</td>
+								<td style="padding:10px; text-align:left;">${imagesHtml}</td>
+							</tr>
+						`;
+					}
+				});
+		}
     </script>
 </body>
 </html>
